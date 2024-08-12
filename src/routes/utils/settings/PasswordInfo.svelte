@@ -3,7 +3,8 @@
 	import Card from '../widgets/Card.svelte';
 </script>
 
-<Card title="Password Information" class="max-w-none">>
+<Card title="Password Information" class="max-w-none"
+	>>
 	<div class="grid grid-cols-6 gap-6">
 		<Label class="col-span-6 space-y-2 sm:col-span-3">
 			<span>Current password</span>

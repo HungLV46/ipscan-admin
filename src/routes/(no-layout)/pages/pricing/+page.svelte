@@ -1,7 +1,16 @@
 <script lang="ts">
-	import { Button, DarkMode, NavBrand, NavHamburger, NavLi, NavUl, Navbar, Toggle } from 'flowbite-svelte';
+	import {
+		Button,
+		DarkMode,
+		NavBrand,
+		NavHamburger,
+		NavLi,
+		NavUl,
+		Navbar,
+		Toggle
+	} from 'flowbite-svelte';
 	import { ArrowLeftToBracketOutline, CloseOutline } from 'flowbite-svelte-icons';
-	import MetaTag from '../../../utils/MetaTag.svelte';
+	import MetaTag from '../../../../lib/ui-components/meta/meta-tags.svelte';
 	import ComparisonTable from './ComparisonTable.svelte';
 	import Faq from './FAQ.svelte';
 	import Footer from './Footer.svelte';
@@ -16,9 +25,9 @@
 	$: period = yearly ? 'year' : 'month';
 
 	const path: string = '/pages/pricing';
-  const description: string = 'Pricing examaple - Flowbite Svelte Admin Dashboard';
-  const title: string = 'Flowbite Svelte Admin Dashboard - Pricing';
-  const subtitle: string = 'Pricing';
+	const description: string = 'Pricing examaple - Flowbite Svelte Admin Dashboard';
+	const title: string = 'Flowbite Svelte Admin Dashboard - Pricing';
+	const subtitle: string = 'Pricing';
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />

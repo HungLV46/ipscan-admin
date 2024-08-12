@@ -1,24 +1,24 @@
-const site = 'https://flowbite-svelte-admin-dashboard.vercel.app/'; 
+const site = 'https://flowbite-svelte-admin-dashboard.vercel.app/';
 const pages: string[] = [
-  '',
-  'dashboard',
-  'layouts/stacked',
-  'layouts/sidebar',
-  'crud/products',
-  'crud/users',
-  'settings',
-  'pages/pricing',
-  'errors/400',
-  'errors/404',
-  'errors/500',
-  'authentication/sign-in',
-  'authentication/sign-up',
-  'authentication/forgot-password',
-  'authentication/reset-password',
-  'authentication/profile-lock',
-  'playground/stacked',
-  'playground/sidebar',
-]
+	'',
+	'dashboard',
+	'layouts/stacked',
+	'layouts/sidebar',
+	'crud/products',
+	'crud/users',
+	'settings',
+	'pages/pricing',
+	'errors/400',
+	'errors/404',
+	'errors/500',
+	'authentication/sign-in',
+	'authentication/sign-up',
+	'authentication/forgot-password',
+	'authentication/reset-password',
+	'authentication/profile-lock',
+	'playground/stacked',
+	'playground/sidebar'
+];
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
@@ -39,14 +39,14 @@ const sitemap = (pages: string[]) => `<?xml version="1.0" encoding="UTF-8" ?>
   xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
 >
   ${pages
-	.map(
-		(page) => `
+		.map(
+			(page) => `
   <url>
     <loc>${site}/${page}</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   `
-	)
-	.join('')}
+		)
+		.join('')}
 </urlset>`;

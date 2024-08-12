@@ -1,21 +1,37 @@
-/** 
- * @param {boolean} dark  
+/**
+ * @param {boolean} dark
  * @return {import('apexcharts').ApexOptions}
-*/
-export default function(dark) {
+ */
+export default function (dark) {
+	let backgroundBarColors = [
+		'#E5E7EB',
+		'#E5E7EB',
+		'#E5E7EB',
+		'#E5E7EB',
+		'#E5E7EB',
+		'#E5E7EB',
+		'#E5E7EB'
+	];
 
-    let backgroundBarColors = ['#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB', '#E5E7EB']
-
-
-	if (dark) {	
-		backgroundBarColors = ['#374151', '#374151', '#374151', '#374151', '#374151', '#374151', '#374151']
-    }
+	if (dark) {
+		backgroundBarColors = [
+			'#374151',
+			'#374151',
+			'#374151',
+			'#374151',
+			'#374151',
+			'#374151',
+			'#374151'
+		];
+	}
 
 	return {
-		series: [{
-			name: 'Users',
-			data: [1334, 2435, 1753, 1328, 1155, 1632, 1336]
-		}],
+		series: [
+			{
+				name: 'Users',
+				data: [1334, 2435, 1753, 1328, 1155, 1632, 1336]
+			}
+		],
 		labels: ['01 Feb', '02 Feb', '03 Feb', '04 Feb', '05 Feb', '06 Feb', '07 Feb'],
 		chart: {
 			type: 'bar',
@@ -29,7 +45,7 @@ export default function(dark) {
 		theme: {
 			monochrome: {
 				enabled: true,
-                color: '#EF562F'
+				color: '#EF562F'
 			}
 		},
 		plotOptions: {
@@ -39,7 +55,7 @@ export default function(dark) {
 				colors: {
 					backgroundBarColors: backgroundBarColors,
 					backgroundBarRadius: 3
-				},
+				}
 			},
 			dataLabels: {
 				hideOverflowingLabels: false
@@ -55,7 +71,7 @@ export default function(dark) {
 			},
 			axisTicks: {
 				show: false
-			},
+			}
 		},
 		tooltip: {
 			shared: true,
@@ -87,6 +103,6 @@ export default function(dark) {
 		},
 		legend: {
 			show: false
-		},
+		}
 	};
 }

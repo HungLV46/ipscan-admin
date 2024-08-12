@@ -10,7 +10,7 @@
 	import DarkChart from '../widgets/DarkChart.svelte';
 	import { onMount } from 'svelte';
 	// import chart_options_func from '../../routes/(sidebar)/dashboard/chart_options';
-  import chart_options_func from '../../(sidebar)/dashboard/chart_options';
+	import chart_options_func from '../../(sidebar)/dashboard/chart_options';
 	import ActivityList from './ActivityList.svelte';
 	import Change from './Change.svelte';
 	import Chat from './Chat.svelte';
@@ -75,7 +75,14 @@
 				</p>
 				<Change size="sm" value={-3.4} since="Since last month" class="w-full" />
 			</div>
-			<DarkChart configFunc={(d)=>{const x = users(d); x.plotOptions.bar.horizontal=true; return x}} class="w-full"/>
+			<DarkChart
+				configFunc={(d) => {
+					const x = users(d);
+					x.plotOptions.bar.horizontal = true;
+					return x;
+				}}
+				class="w-full"
+			/>
 		</Card>
 	</div>
 	<div class="grid grid-cols-1 gap-4 xl:grid-cols-2">
