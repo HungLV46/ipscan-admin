@@ -1,68 +1,260 @@
 <script lang="ts">
-	import { Button, CloseButton, Heading, Input, Label, Select, Textarea } from 'flowbite-svelte';
-	import { CloseOutline } from 'flowbite-svelte-icons';
-	export let hidden: boolean = true; // modal control
+	import {
+		Breadcrumb,
+		BreadcrumbItem,
+		Button,
+		Card,
+		Heading,
+		Label,
+		Toggle
+	} from 'flowbite-svelte';
+	import { CheckOutline, EditOutline, PlusOutline, TrashBinSolid } from 'flowbite-svelte-icons';
+
+	import Input from '$lib/ui-components/forms/input.svelte';
+	import Textarea from '$lib/ui-components/forms/text-area.svelte';
+	import MetaTag from '$lib/ui-components/meta/meta-tags.svelte';
+	import MultiSelectWithSearch from '$lib/ui-components/forms/multi-select-with-search.svelte';
+	import Select from '$lib/ui-components/forms/single-select.svelte';
+	import ImageInput from '$lib/ui-components/forms/image-input.svelte';
+	import BannerInput from '$lib/ui-components/forms/banner-input.svelte';
+	import AvatarInput from '$lib/ui-components/forms/avatar-input.svelte';
+	import type { ProductPageData } from './+page';
+
+	import Delete from './Delete.svelte';
+
+	import _ from 'underscore';
+	import ClonableSelectInput from '$lib/ui-components/forms/clonable-select-input.svelte';
+	import ClonableInputInput from '$lib/ui-components/forms/clonable-input-input.svelte';
+	import { CHAINS, PAGE_MODE, PRODUCT_CATEGORIES } from '$lib/constants';
+
+	export let data: ProductPageData;
+	export let mode: string = PAGE_MODE.CREATE;
+
+	const path: string = '/crud/products/create';
+	$: description = `A place to ${mode} a single product`;
+	$: title = `Admin – Products ${mode}`;
+	$: subtitle = `Products ${mode}`;
+
+	let openDelete: boolean = false;
+	$: isViewMode = mode === PAGE_MODE.VIEW;
 </script>
 
-<Heading tag="h5" class="mb-6 text-sm font-semibold uppercase">Add new product</Heading>
-<CloseButton
-	on:click={() => (hidden = true)}
-	class="absolute right-2.5 top-2.5 text-gray-400 hover:text-black dark:text-white"
-/>
+<MetaTag {path} {description} {title} {subtitle} />
 
-<form action="#">
-	<div class="space-y-4">
-		<Label class="space-y-2">
-			<span>Name</span>
-			<Input
-				name="title"
-				class="border font-normal outline-none"
-				placeholder="Type product name"
-				required
+<form method="POST">
+	<main class="relative h-full w-full overflow-y-auto bg-white dark:bg-gray-800">
+		<div class="p-4">
+			<Breadcrumb class="mb-5">
+				<BreadcrumbItem home href="/crud/products">Products</BreadcrumbItem>
+				<BreadcrumbItem>{isViewMode ? 'View' : 'Edit'}</BreadcrumbItem>
+			</Breadcrumb>
+			<Heading tag="h1" class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
+				Edit product
+			</Heading>
+			<BannerInput
+				name="banner_img"
+				src={data.product?.banner_img}
+				alt="please select a product banner!"
+				class="max-w-screen-xl"
+				disabled={isViewMode}
 			/>
-		</Label>
+			<Card size="xl" class="w-full">
+				<div class="mb-7 flex flex-row">
+					<AvatarInput
+						name="avatar_img"
+						src={data.product?.avatar_img}
+						alt="please select a product avatar!"
+						disabled={isViewMode}
+					/>
+					<div class="ml-4 flex flex-col space-y-3">
+						<Input
+							class="w-22 me-4"
+							placeholder="Product name"
+							value={data.product?.name}
+							inputProps={{ name: 'name', disabled: isViewMode }}
+						/>
+						<Toggle
+							name="featured"
+							class="me-4"
+							size="small"
+							color="blue"
+							checked={!_.isEmpty(data.product?.featured_at)}
+							disabled={isViewMode}
+						>
+							Featured
+						</Toggle>
+						<Select
+							class="w-22 me-4"
+							items={PRODUCT_CATEGORIES.map((c) => ({ name: c, value: c }))}
+							selected={data.product?.category}
+							selectProps={{
+								name: 'category',
+								disabled: isViewMode
+							}}
+						/>
+					</div>
+					<div class="mb-auto ml-auto justify-center space-x-2">
+						{#if mode === PAGE_MODE.CREATE}
+							<Button type="submit" size="sm" class="mr-10 w-36 gap-2 px-3" color="green">
+								<PlusOutline size="sm" /> Add
+							</Button>
+						{:else}
+							<Button
+								color="red"
+								size="sm"
+								class="w-36 gap-2 px-3"
+								on:click={() => {
+									openDelete = true;
+								}}
+							>
+								<TrashBinSolid size="sm" /> Delete
+							</Button>
+							{#if mode === PAGE_MODE.VIEW}
+								<Button
+									size="sm"
+									class="w-36 gap-2 px-3"
+									color="green"
+									on:click={() => (mode = PAGE_MODE.EDIT)}
+								>
+									<EditOutline size="sm" /> Edit
+								</Button>
+							{:else}
+								<Button type="submit" size="sm" class="w-36 gap-2 px-3" color="green">
+									<CheckOutline size="sm" /> Save
+								</Button>
+							{/if}
+						{/if}
+					</div>
+				</div>
 
-		<Label class="space-y-2">
-			<span>Price</span>
-			<Input name="price" class="border font-normal outline-none" placeholder="$2999" required />
-		</Label>
-		<Label class="space-y-2">
-			<span>Technology</span>
-			<Select class="border-gray-300 font-normal outline-none">
-				<option selected>Select category</option>
-				<option value="FL">Flowbite</option>
-				<option value="RE">React</option>
-				<option value="AN">Angular</option>
-				<option value="VU">Vue</option>
-			</Select>
-		</Label>
-		<Label class="space-y-2">
-			<span>Description</span>
-			<Textarea
-				rows="4"
-				placeholder="Enter event description here"
-				class="border-gray-300 font-normal outline-none"
-			></Textarea>
-		</Label>
-		<Label class="space-y-2">
-			<span>Discount</span>
-			<Select class="border-gray-300 font-normal outline-none">
-				<option selected>No</option>
-				<option value="5">5%</option>
-				<option value="10">10%</option>
-				<option value="20">20%</option>
-				<option value="30">30%</option>
-				<option value="40">40%</option>
-				<option value="50">50%</option>
-			</Select>
-		</Label>
+				<Card size="xl" class="max-w-none shadow-sm">
+					<div class="mb-4 flex items-center justify-between">
+						<h3 class="text-lg font-semibold text-gray-900 dark:text-white">On-chain Info</h3>
+					</div>
+					<Label>Link Collection(s)</Label>
+					<ClonableSelectInput
+						name="collections"
+						items={data.product?.collections || []}
+						selectProps={{
+							name: 'Chain',
+							class: 'mb-2 me-4 mt-3 w-48',
+							items: Object.keys(CHAINS).map((id) => ({
+								name: CHAINS[id],
+								value: id
+							}))
+						}}
+						selectedPath="chain_id"
+						inputProps={{
+							name: 'Contract address',
+							placeholder: 'e.g. 0x00000000...'
+						}}
+						inputPath="contract_address"
+						disabled={isViewMode}
+					/>
+				</Card>
 
-		<div class="bottom-0 left-0 flex w-full justify-center space-x-4 pb-4 md:absolute md:px-4">
-			<Button type="submit" class="w-full">Add product</Button>
-			<Button color="alternative" class="w-full" on:click={() => (hidden = true)}>
-				<CloseOutline />
-				Cancel
-			</Button>
+				<Card size="xl" class="mt-2 max-w-none shadow-sm">
+					<div class="mb-4 flex items-center justify-between">
+						<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Off-chain info</h3>
+					</div>
+					<Textarea
+						name="About"
+						placeholder="Product description"
+						class="w-22 mb-2 me-4 mt-3 w-full"
+						value={data.product?.description}
+						textareaProps={{ name: 'about', disabled: isViewMode }}
+					/>
+					<Input
+						name="Creator"
+						placeholder="e.g. Robert Perez"
+						class="w-22 mb-2 me-4 mt-3"
+						value={data.product?.owner?.name}
+						inputProps={{ name: 'creator', disabled: isViewMode }}
+					/>
+					<ImageInput
+						name="Overview pictures/media"
+						selectedFiles={data.product?.metadata?.previews?.map((p) => ({ src: p }))}
+						inputProps={{ name: 'previews', disabled: isViewMode }}
+					/>
+					<Input
+						name="CTA link"
+						placeholder="Call to action link"
+						class="w-22 mb-2 me-4 mt-3"
+						value={data.product?.metadata?.cta_url}
+						inputProps={{ name: 'cta_url', disabled: isViewMode }}
+					/>
+					<ClonableInputInput
+						name="socials"
+						items={data.product?.metadata?.socials}
+						inputPropsList={[
+							{
+								name: 'Social',
+								placeholder: 'e.g. Discord',
+								inputPath: 'name',
+								class: 'mb-2 me-4 mt-3 w-48'
+							},
+							{
+								name: 'Url',
+								placeholder: 'e.g. https://www.example.com',
+								inputPath: 'url'
+							}
+						]}
+						disabled={isViewMode}
+					/>
+				</Card>
+
+				<Card size="xl" class="mt-2 max-w-none shadow-sm">
+					<div class="mb-4 flex items-center justify-between">
+						<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Type-Specific</h3>
+					</div>
+					<MultiSelectWithSearch
+						name="Status"
+						placeholder="e.g. Ethereum"
+						class="mb-2 me-4 mt-3 w-full"
+						items={data.status}
+						selected={data.selected_status}
+						multiSelectProps={{
+							name: 'statuses',
+							allowUserOptions: 'append',
+							disabled: isViewMode
+						}}
+					/>
+					<MultiSelectWithSearch
+						name="Player info"
+						placeholder="e.g. Ethereum"
+						class="mb-2 me-4 mt-3 w-full"
+						items={data.status}
+						selected={data.selected_status}
+						multiSelectProps={{
+							name: 'players_infos',
+							allowUserOptions: 'append',
+							disabled: isViewMode
+						}}
+					/>
+					<MultiSelectWithSearch
+						name="Genre"
+						placeholder="e.g. Ethereum"
+						class="mb-2 me-4 mt-3 w-full"
+						items={data.genres}
+						selected={data.selected_genres}
+						multiSelectProps={{ name: 'genres', allowUserOptions: 'append', disabled: isViewMode }}
+					/>
+					<MultiSelectWithSearch
+						name="Game mode"
+						placeholder="e.g. Ethereum"
+						class="mb-2 me-4 mt-3 w-full"
+						items={data.game_modes}
+						selected={data.selected_game_modes}
+						multiSelectProps={{
+							name: 'game_modes',
+							allowUserOptions: 'append',
+							disabled: isViewMode
+						}}
+					/>
+				</Card>
+			</Card>
 		</div>
-	</div>
+	</main>
 </form>
+
+<Delete bind:open={openDelete} />

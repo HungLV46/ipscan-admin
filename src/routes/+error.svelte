@@ -17,7 +17,7 @@
 		.reduce((p, c) => (p < status ? c : p));
 	const component = pages[index];
 
-	import MetaTag from './utils/MetaTag.svelte';
+	import MetaTag from '$lib/ui-components/meta/meta-tags.svelte';
 
 	const path: string = `/errors/${index}`;
 	const description: string = `${index} - Flowbite Svelte Admin Dashboard`;
@@ -26,6 +26,5 @@
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
-
 
 <svelte:component this={component}></svelte:component>

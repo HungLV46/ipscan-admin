@@ -13,12 +13,12 @@
 
 	import { imagesPath } from '../../utils/variables';
 	import Users from '../../data/users.json';
-	import MetaTag from '../../utils/MetaTag.svelte';
+	import MetaTag from '../../../lib/ui-components/meta/meta-tags.svelte';
 
 	const path: string = '/settings';
-  const description: string = 'Settings examaple - Flowbite Svelte Admin Dashboard';
-  const title: string = 'Flowbite Svelte Admin Dashboard - Settings';
-  const subtitle: string = 'Settings';
+	const description: string = 'Settings examaple - Flowbite Svelte Admin Dashboard';
+	const title: string = 'Flowbite Svelte Admin Dashboard - Settings';
+	const subtitle: string = 'Settings';
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />

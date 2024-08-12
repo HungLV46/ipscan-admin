@@ -10,7 +10,7 @@ const config = {
 		extend: {}
 	},
 
-	plugins: [require('flowbite/plugin')({charts:true})],
+	plugins: [require('flowbite/plugin')({ charts: true })],
 	darkMode: 'class',
 	theme: {
 		fontFamily: {

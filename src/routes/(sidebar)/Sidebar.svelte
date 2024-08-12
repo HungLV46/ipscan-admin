@@ -12,17 +12,12 @@
 	import {
 		AngleDownOutline,
 		AngleUpOutline,
-		ClipboardListSolid,
-		CogOutline,
-		FileChartBarSolid,
-		GithubSolid,
-		LayersSolid,
-		LifeSaverSolid,
 		LockSolid,
-		WandMagicSparklesOutline,
-		ChartPieOutline,
-		RectangleListSolid,
-		TableColumnSolid
+		ChartPieSolid,
+		UserSolid,
+		UsersSolid,
+		ObjectsColumnSolid,
+		CogSolid
 	} from 'flowbite-svelte-icons';
 
 	export let drawerHidden: boolean = false;
@@ -49,77 +44,21 @@
 	});
 
 	let posts = [
-		{ name: 'Dashboard', icon: ChartPieOutline, href: '/dashboard' },
-		{
-			name: 'Layouts',
-			icon: TableColumnSolid,
-			children: {
-				Stacked: '/layouts/stacked',
-				Sidebar: '/layouts/sidebar'
-			}
-		},
-		{
-			name: 'CRUD',
-			icon: RectangleListSolid,
-			children: {
-				Products: '/crud/products',
-				Users: '/crud/users'
-			}
-		},
-		{ name: 'Settings', icon: CogOutline, href: '/settings' },
-		{
-			name: 'Pages',
-			icon: FileChartBarSolid,
-			children: {
-				Pricing: '/pages/pricing',
-				Maintenance: '/errors/400',
-				'404 not found': '/errors/404',
-				'500 server error': '/errors/500'
-			}
-		},
+		{ name: 'Dashboard', icon: ChartPieSolid, href: '/dashboard' },
+		{ name: 'Account', icon: UserSolid, href: '/settings' },
+		{ name: 'Creator', icon: UsersSolid, href: '/crud/users' },
+		{ name: 'Product', icon: ObjectsColumnSolid, href: '/crud/products' },
+		{ name: 'Settings', icon: CogSolid, href: '/settings' },
 		{
 			name: 'Authenication',
 			icon: LockSolid,
 			children: {
-				'Sign in': '/authentication/sign-in',
-				'Sign up': '/authentication/sign-up',
 				'Forgot password': '/authentication/forgot-password',
-				'Reset password': '/authentication/reset-password',
-				'Profile lock': '/authentication/profile-lock'
-			}
-		},
-		{
-			name: 'Playground',
-			icon: WandMagicSparklesOutline,
-			children: {
-				Stacked: '/playground/stacked',
-				Sidebar: '/playground/sidebar'
+				'Reset password': '/authentication/reset-password'
 			}
 		}
 	];
 
-	let links = [
-		{
-			label: 'GitHub Repository',
-			href: 'https://github.com/themesberg/flowbite-svelte-admin-dashboard',
-			icon: GithubSolid
-		},
-		{
-			label: 'Flowbite Svelte',
-			href: 'https://flowbite-svelte.com/docs/pages/quickstart',
-			icon: ClipboardListSolid
-		},
-		{
-			label: 'Components',
-			href: 'https://flowbite-svelte.com/docs/components/accordion',
-			icon: LayersSolid
-		},
-		{
-			label: 'Support',
-			href: 'https://github.com/themesberg/flowbite-svelte-admin-dashboard/issues',
-			icon: LifeSaverSolid
-		}
-	];
 	let dropdowns = Object.fromEntries(Object.keys(posts).map((x) => [x, false]));
 </script>
 
@@ -163,20 +102,6 @@
 							<svelte:component this={icon} slot="icon" class={iconClass} />
 						</SidebarItem>
 					{/if}
-				{/each}
-			</SidebarGroup>
-			<SidebarGroup ulClass={groupClass}>
-				{#each links as { label, href, icon } (label)}
-					<SidebarItem
-						{label}
-						{href}
-						spanClass="ml-3"
-						class={itemClass}
-						active={activeMainSidebar === href}
-						target="_blank"
-					>
-						<svelte:component this={icon} slot="icon" class={iconClass} />
-					</SidebarItem>
 				{/each}
 			</SidebarGroup>
 		</nav>

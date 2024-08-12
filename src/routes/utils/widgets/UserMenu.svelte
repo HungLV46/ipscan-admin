@@ -5,7 +5,6 @@
 	export let name: string = ''; // "Neil Sims",
 	export let avatar: string = ''; // "neil-sims.png",
 	export let email: string = ''; // "neil.sims@flowbite.com",
-	
 </script>
 
 <button class="ms-3 rounded-full ring-gray-400 focus:ring-4 dark:ring-gray-600">

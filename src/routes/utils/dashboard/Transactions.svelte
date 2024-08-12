@@ -46,7 +46,7 @@
 	];
 </script>
 
-<Card size="xl" class="shadow-sm max-w-none">
+<Card size="xl" class="max-w-none shadow-sm">
 	<div class="items-center justify-between lg:flex">
 		<div class="mb-4 mt-px lg:mb-0">
 			<Heading tag="h3" class="-ml-0.25 mb-2 text-xl font-semibold dark:text-white">
