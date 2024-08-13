@@ -15,7 +15,7 @@
 		LockSolid,
 		UserSolid,
 		UsersSolid,
-		ObjectsColumnSolid,
+		ObjectsColumnSolid
 	} from 'flowbite-svelte-icons';
 
 	export let drawerHidden: boolean = false;
