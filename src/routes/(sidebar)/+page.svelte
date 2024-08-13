@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import Dashboard from '../utils/dashboard/Dashboard.svelte';
 	import MetaTag from '../../lib/ui-components/meta/meta-tags.svelte';
-	export let data: PageData;
 
 	const path: string = '';
 	const description: string = 'Admin Dashboard example using Flowbite Svelte';
@@ -12,5 +10,5 @@
 
 <MetaTag {path} {description} {title} {subtitle} />
 <main class="p-4">
-	<Dashboard {data} />
+	<div></div>
 </main>

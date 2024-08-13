@@ -22,10 +22,10 @@
 		type ProductResponseData
 	} from '$lib/apis/product/list-products';
 	import Input from '$lib/ui-components/forms/input.svelte';
-	import type { ListWithPagingResponse } from '$lib/apis/product/types';
 
 	import _ from 'underscore';
 	import Delete from './Delete.svelte';
+	import type { ListWithPagingResponse } from '$lib/apis/types';
 
 	const path: string = '/crud/products';
 	const description: string = 'A place to create product';
