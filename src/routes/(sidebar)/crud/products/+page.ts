@@ -7,8 +7,8 @@ import { type ProductGetResponseData } from '$lib/apis/product/get-product';
 export interface ProductPageData {
 	mode?: string;
 	product?: ProductGetResponseData;
-	status: string[];
-	selected_status?: string[];
+	statuses: string[];
+	selected_statuses?: string[];
 	genres: string[];
 	selected_genres?: string[];
 	player_supports: string[];

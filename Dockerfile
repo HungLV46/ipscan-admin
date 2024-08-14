@@ -1,6 +1,7 @@
 FROM node:20-alpine AS builder
 WORKDIR /staging
 COPY . /staging/
+COPY ./.env.public /staging/.env
 RUN corepack enable && \
   yarn install --frozen-lockfile && \
   yarn build

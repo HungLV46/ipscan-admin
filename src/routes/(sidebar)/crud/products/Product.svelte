@@ -29,6 +29,7 @@
 
 	export let data: ProductPageData;
 	export let mode: string = PAGE_MODE.CREATE;
+	export let form: any;
 
 	const path: string = '/crud/products/create';
 	$: description = `A place to ${mode} a single product`;
@@ -37,6 +38,8 @@
 
 	let openDelete: boolean = false;
 	$: isViewMode = mode === PAGE_MODE.VIEW;
+
+	console.log(form);
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
@@ -86,7 +89,7 @@
 						<Select
 							class="w-22 me-4"
 							items={PRODUCT_CATEGORIES.map((c) => ({ name: c, value: c }))}
-							selected={data.product?.category}
+							selected={data.product?.category || ''}
 							selectProps={{
 								name: 'category',
 								disabled: isViewMode
@@ -211,8 +214,8 @@
 						name="Status"
 						placeholder="e.g. Ethereum"
 						class="mb-2 me-4 mt-3 w-full"
-						items={data.status}
-						selected={data.selected_status}
+						items={data.statuses}
+						selected={data.selected_statuses}
 						multiSelectProps={{
 							name: 'statuses',
 							allowUserOptions: 'append',
@@ -223,8 +226,8 @@
 						name="Player info"
 						placeholder="e.g. Ethereum"
 						class="mb-2 me-4 mt-3 w-full"
-						items={data.status}
-						selected={data.selected_status}
+						items={data.player_supports}
+						selected={data.selected_player_supports}
 						multiSelectProps={{
 							name: 'players_infos',
 							allowUserOptions: 'append',

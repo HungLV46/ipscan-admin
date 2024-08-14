@@ -8,7 +8,7 @@ export interface ProductGetResponseData {
 	banner_img: string;
 	category: string;
 	description: string;
-	created_at: string;
+	created_at?: string;
 	featured_at: string | null;
 	attributes: { id: number; name: string; value: string }[];
 	metadata: any;
@@ -50,10 +50,12 @@ export async function getProductById(id: number): Promise<ProductGetResponseData
           id
           name
         }
-        collections {
-          id
-          chain_id
-          contract_address
+        collections: product_collections {
+          collection {
+            id
+            chain_id
+            contract_address
+          }
         }
       }
     }
@@ -68,5 +70,9 @@ export async function getProductById(id: number): Promise<ProductGetResponseData
 		})
 	})
 		.then((response) => response.json())
-		.then((response) => response.data.ipscan_products[0]);
+		.then((response) => {
+      return {
+        ...response.data.ipscan_products[0],
+        collections: response.data.ipscan_products[0]?.collections?.map((c: any) => c.collection)
+    }});
 }

@@ -1,24 +1,24 @@
 import { createProduct } from '$lib/apis/product/create-product';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({ cookies, request }) => {
+	default: async ({ request }) => {
 		const data = await request.formData();
-		console.log(data);
 
 		const requestData = {
-			banner_img: data.get('banner_img') as string,
-			avatar_img: data.get('avatar_img') as string,
+			banner_img: data.get('banner_img') as string, // TODO upload banner
+			avatar_img: data.get('avatar_img') as string, // TODO upload img
 			name: data.get('name') as string,
-			featured_at: new Date().toISOString(),
+			featured: data.get('featured') === 'true',
 			category: data.get('category') as string,
 			collections: JSON.parse(data.get('collections') as string),
 			description: data.get('about') as string,
-			owner: { id: 1 }, // TODO get users
-			metadata: JSON.stringify({
+			owner_id: 1, // TODO get users
+			metadata: {
 				// previews: data.get("previews"), TODO upload then use url
 				previews: JSON.parse(data.get('previews') as string).map(() => 'http://demmo.jjj'),
-				cta_url: data.get('cta_url')
-			}), // TODO use object instead
+				cta_url: data.get('cta_url') || undefined
+			},
 			attributes: [
 				...JSON.parse(data.get('statuses') as string).map((value: string) => ({
 					name: 'status',
@@ -38,7 +38,15 @@ export const actions = {
 				}))
 			]
 		};
-		console.log(JSON.stringify(requestData));
-		await createProduct(requestData);
+
+		const createResponse = await createProduct(requestData);
+
+		const responseData = await createResponse.json();
+
+		if (createResponse.status === 200) {
+			throw redirect(303, `/crud/products/${responseData.data.id}`);
+		} else {
+			return fail(responseData.statusCode, responseData);
+		}
 	}
 };

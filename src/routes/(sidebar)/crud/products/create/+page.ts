@@ -20,8 +20,8 @@ export async function load(): Promise<ProductPageData> {
 			attributes: [],
 			collections: []
 		},
-		status: nameToValues['status']?.map((v) => v.value),
-		genres: nameToValues['player support']?.map((v) => v.value),
+		statuses: nameToValues['status']?.map((v) => v.value),
+		genres: nameToValues['genre']?.map((v) => v.value),
 		player_supports: nameToValues['player support']?.map((v) => v.value),
 		game_modes: nameToValues['game mode']?.map((v) => v.value)
 	};
