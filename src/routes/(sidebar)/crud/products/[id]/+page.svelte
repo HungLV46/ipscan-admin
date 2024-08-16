@@ -6,6 +6,7 @@
 
 	export let data: ProductPageData;
 	export let mode: string = data.mode || PAGE_MODE.VIEW;
+	export let form: any = undefined;
 
 	const path: string = '/crud/products';
 	$: description = `A place to ${mode} a single product`;
@@ -15,4 +16,4 @@
 
 <MetaTag {path} {description} {title} {subtitle} />
 
-<ProductPage {data} {mode} />
+<ProductPage {data} {mode} {form} />

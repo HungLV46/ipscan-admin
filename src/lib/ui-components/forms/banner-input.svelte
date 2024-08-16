@@ -55,7 +55,4 @@
 		border-top-right-radius: 0.5rem;
 		object-fit: cover;
 	}
-	img[style*='height'] {
-		max-height: unset;
-	}
 </style>

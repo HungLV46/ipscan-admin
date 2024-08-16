@@ -6,7 +6,7 @@ import { type ProductGetResponseData } from '$lib/apis/product/get-product';
 
 export interface ProductPageData {
 	mode?: string;
-	product?: ProductGetResponseData;
+	product: ProductGetResponseData;
 	statuses: string[];
 	selected_statuses?: string[];
 	genres: string[];

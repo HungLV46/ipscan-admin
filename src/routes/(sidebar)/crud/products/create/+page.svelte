@@ -6,6 +6,7 @@
 
 	export let data: ProductPageData;
 	export let mode: string = PAGE_MODE.CREATE;
+	export let form: any = undefined;
 
 	const path: string = '/crud/products';
 	$: description = `A place to create a single product`;
@@ -15,4 +16,4 @@
 
 <MetaTag {path} {description} {title} {subtitle} />
 
-<ProductPage {data} {mode} />
+<ProductPage {data} {mode} bind:form />

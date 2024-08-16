@@ -6,14 +6,16 @@ export const actions = {
 		const data = await request.formData();
 
 		const requestData = {
-			banner_img: data.get('banner_img') as string, // TODO upload banner
-			avatar_img: data.get('avatar_img') as string, // TODO upload img
+			// banner_img: data.get('banner_img') as string, // TODO upload banner
+			// avatar_img: data.get('avatar_img') as string, // TODO upload img
+			banner_img: 'https://picsum.photos/seed/4mv5QDNfnf/640/480',
+			avatar_img: 'https://picsum.photos/seed/4mv5QDNfnf/640/480',
 			name: data.get('name') as string,
 			featured: data.get('featured') === 'true',
 			category: data.get('category') as string,
 			collections: JSON.parse(data.get('collections') as string),
 			description: data.get('about') as string,
-			owner_id: 1, // TODO get users
+			owner_id: parseInt(data.get('creator') as string), // TODO get users
 			metadata: {
 				// previews: data.get("previews"), TODO upload then use url
 				previews: JSON.parse(data.get('previews') as string).map(() => 'http://demmo.jjj'),
@@ -42,6 +44,8 @@ export const actions = {
 		const createResponse = await createProduct(requestData);
 
 		const responseData = await createResponse.json();
+
+		console.log('responseData', responseData); // TODO remove
 
 		if (createResponse.status === 200) {
 			throw redirect(303, `/crud/products/${responseData.data.id}`);

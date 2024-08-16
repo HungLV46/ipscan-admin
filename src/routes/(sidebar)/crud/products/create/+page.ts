@@ -10,15 +10,17 @@ export async function load(): Promise<ProductPageData> {
 	return {
 		product: {
 			name: '',
-			category: '',
-			description: '',
+			owner: {
+				id: undefined,
+				name: undefined
+			},
 			avatar_img: '',
 			banner_img: '',
-			owner: {},
-			metadata: {},
+			category: '',
+			description: '',
 			featured_at: null,
 			attributes: [],
-			collections: []
+			metadata: undefined
 		},
 		statuses: nameToValues['status']?.map((v) => v.value),
 		genres: nameToValues['genre']?.map((v) => v.value),

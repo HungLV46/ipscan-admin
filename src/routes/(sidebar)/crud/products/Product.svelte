@@ -9,6 +9,8 @@
 		Toggle
 	} from 'flowbite-svelte';
 	import { CheckOutline, EditOutline, PlusOutline, TrashBinSolid } from 'flowbite-svelte-icons';
+	import { enhance } from '$app/forms';
+	import Delete from './Delete.svelte';
 
 	import Input from '$lib/ui-components/forms/input.svelte';
 	import Textarea from '$lib/ui-components/forms/text-area.svelte';
@@ -20,12 +22,11 @@
 	import AvatarInput from '$lib/ui-components/forms/avatar-input.svelte';
 	import type { ProductPageData } from './+page';
 
-	import Delete from './Delete.svelte';
-
 	import _ from 'underscore';
 	import ClonableSelectInput from '$lib/ui-components/forms/clonable-select-input.svelte';
 	import ClonableInputInput from '$lib/ui-components/forms/clonable-input-input.svelte';
 	import { CHAINS, PAGE_MODE, PRODUCT_CATEGORIES } from '$lib/constants';
+	import Alert from '$lib/ui-components/views/alert.svelte';
 
 	export let data: ProductPageData;
 	export let mode: string = PAGE_MODE.CREATE;
@@ -38,15 +39,20 @@
 
 	let openDelete: boolean = false;
 	$: isViewMode = mode === PAGE_MODE.VIEW;
-
-	console.log(form);
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data" use:enhance>
 	<main class="relative h-full w-full overflow-y-auto bg-white dark:bg-gray-800">
-		<div class="p-4">
+		<div class="mt-10 p-4">
+			{#if form?.error}
+				<Alert
+					class="fixed left-[60%] z-20 translate-x-[-50%]"
+					type="error"
+					description={form.message}
+				/>
+			{/if}
 			<Breadcrumb class="mb-5">
 				<BreadcrumbItem home href="/crud/products">Products</BreadcrumbItem>
 				<BreadcrumbItem>{isViewMode ? 'View' : 'Edit'}</BreadcrumbItem>
@@ -56,7 +62,7 @@
 			</Heading>
 			<BannerInput
 				name="banner_img"
-				src={data.product?.banner_img}
+				src={data.product.banner_img}
 				alt="please select a product banner!"
 				class="max-w-screen-xl"
 				disabled={isViewMode}
@@ -65,7 +71,7 @@
 				<div class="mb-7 flex flex-row">
 					<AvatarInput
 						name="avatar_img"
-						src={data.product?.avatar_img}
+						src={data.product.avatar_img}
 						alt="please select a product avatar!"
 						disabled={isViewMode}
 					/>
@@ -73,7 +79,7 @@
 						<Input
 							class="w-22 me-4"
 							placeholder="Product name"
-							value={data.product?.name}
+							value={data.product.name}
 							inputProps={{ name: 'name', disabled: isViewMode }}
 						/>
 						<Toggle
@@ -81,7 +87,7 @@
 							class="me-4"
 							size="small"
 							color="blue"
-							checked={!_.isEmpty(data.product?.featured_at)}
+							checked={!_.isEmpty(data.product.featured_at)}
 							disabled={isViewMode}
 						>
 							Featured
@@ -89,7 +95,7 @@
 						<Select
 							class="w-22 me-4"
 							items={PRODUCT_CATEGORIES.map((c) => ({ name: c, value: c }))}
-							selected={data.product?.category || ''}
+							selected={data.product.category || ''}
 							selectProps={{
 								name: 'category',
 								disabled: isViewMode
@@ -137,7 +143,7 @@
 					<Label>Link Collection(s)</Label>
 					<ClonableSelectInput
 						name="collections"
-						items={data.product?.collections || []}
+						items={data.product.collections || []}
 						selectProps={{
 							name: 'Chain',
 							class: 'mb-2 me-4 mt-3 w-48',
@@ -164,31 +170,31 @@
 						name="About"
 						placeholder="Product description"
 						class="w-22 mb-2 me-4 mt-3 w-full"
-						value={data.product?.description}
+						value={data.product.description}
 						textareaProps={{ name: 'about', disabled: isViewMode }}
 					/>
 					<Input
 						name="Creator"
 						placeholder="e.g. Robert Perez"
 						class="w-22 mb-2 me-4 mt-3"
-						value={data.product?.owner?.name}
+						value={data.product.owner?.name}
 						inputProps={{ name: 'creator', disabled: isViewMode }}
 					/>
 					<ImageInput
 						name="Overview pictures/media"
-						selectedFiles={data.product?.metadata?.previews?.map((p) => ({ src: p }))}
+						selectedFiles={data.product.metadata?.previews?.map((p) => ({ src: p }))}
 						inputProps={{ name: 'previews', disabled: isViewMode }}
 					/>
 					<Input
 						name="CTA link"
 						placeholder="Call to action link"
 						class="w-22 mb-2 me-4 mt-3"
-						value={data.product?.metadata?.cta_url}
+						value={data.product.metadata?.cta_url}
 						inputProps={{ name: 'cta_url', disabled: isViewMode }}
 					/>
 					<ClonableInputInput
 						name="socials"
-						items={data.product?.metadata?.socials}
+						items={data.product.metadata?.socials}
 						inputPropsList={[
 							{
 								name: 'Social',

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Dropzone } from 'flowbite-svelte';
+	import { Dropzone } from 'flowbite-svelte';
 	import { MinusOutline } from 'flowbite-svelte-icons';
 
 	type Src = string | null | undefined;
@@ -8,7 +8,7 @@
 
 	function handleFileChange(event: Event) {
 		const files = (event.target as HTMLInputElement)?.files || [];
-		console.log(files);
+
 		for (let i = 0; i < files.length; i++) {
 			const file = files[i];
 			if (file && file.type.startsWith('image/')) {

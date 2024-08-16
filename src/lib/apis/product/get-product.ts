@@ -52,7 +52,6 @@ export async function getProductById(id: number): Promise<ProductGetResponseData
         }
         collections: product_collections {
           collection {
-            id
             chain_id
             contract_address
           }
@@ -71,8 +70,9 @@ export async function getProductById(id: number): Promise<ProductGetResponseData
 	})
 		.then((response) => response.json())
 		.then((response) => {
-      return {
-        ...response.data.ipscan_products[0],
-        collections: response.data.ipscan_products[0]?.collections?.map((c: any) => c.collection)
-    }});
+			return {
+				...response.data.ipscan_products[0],
+				collections: response.data.ipscan_products[0]?.collections?.map((c: any) => c.collection)
+			};
+		});
 }
