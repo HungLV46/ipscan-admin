@@ -16,4 +16,4 @@
 
 <MetaTag {path} {description} {title} {subtitle} />
 
-<ProductPage {data} {mode} bind:form />
+<ProductPage {data} bind:mode bind:form />

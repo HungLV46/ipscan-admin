@@ -1,6 +1,6 @@
 import { updateProduct } from '$lib/apis/product/update-product.js';
+import { PAGE_MODE } from '$lib/constants.js';
 import { fail, redirect } from '@sveltejs/kit';
-import { invalidateAll } from '$app/navigation';
 
 export const actions = {
 	default: async ({ params, request }) => {
@@ -50,7 +50,8 @@ export const actions = {
 		console.log('responseData', responseData); // TODO remove
 
 		if (updateResponse.status === 200) {
-			throw redirect(303, `/crud/products/${id}`); // TODO force reload from server
+			// TODO find a more systematical way to reload a page
+			return fail(responseData.statusCode, { reload: true, mode: PAGE_MODE.VIEW });
 		} else {
 			return fail(responseData.statusCode, responseData);
 		}

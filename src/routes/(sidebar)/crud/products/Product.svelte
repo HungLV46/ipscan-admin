@@ -29,8 +29,8 @@
 	import Alert from '$lib/ui-components/views/alert.svelte';
 
 	export let data: ProductPageData;
-	export let mode: string = PAGE_MODE.CREATE;
 	export let form: any;
+	export let mode: string = PAGE_MODE.VIEW;
 
 	const path: string = '/crud/products/create';
 	$: description = `A place to ${mode} a single product`;
@@ -38,11 +38,15 @@
 	$: subtitle = `Products ${mode}`;
 
 	let openDelete: boolean = false;
-	$: isViewMode = mode === PAGE_MODE.VIEW;
+	$: isViewMode = mode === PAGE_MODE.VIEW || form?.reload;
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
 
+<!-- TODO find a more systematical way to reload a page -->
+{#if form?.reload}
+	{window.location.reload()}
+{/if}
 <form method="POST" enctype="multipart/form-data" use:enhance>
 	<main class="relative h-full w-full overflow-y-auto bg-white dark:bg-gray-800">
 		<div class="mt-10 p-4">
@@ -55,7 +59,7 @@
 			{/if}
 			<Breadcrumb class="mb-5">
 				<BreadcrumbItem home href="/crud/products">Products</BreadcrumbItem>
-				<BreadcrumbItem>{isViewMode ? 'View' : 'Edit'}</BreadcrumbItem>
+				<BreadcrumbItem>{mode}</BreadcrumbItem>
 			</Breadcrumb>
 			<Heading tag="h1" class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
 				Edit product

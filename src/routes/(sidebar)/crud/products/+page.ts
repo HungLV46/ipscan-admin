@@ -5,7 +5,6 @@ import * as _ from 'underscore';
 import { type ProductGetResponseData } from '$lib/apis/product/get-product';
 
 export interface ProductPageData {
-	mode?: string;
 	product: ProductGetResponseData;
 	statuses: string[];
 	selected_statuses?: string[];

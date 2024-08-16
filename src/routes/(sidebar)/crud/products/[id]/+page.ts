@@ -13,7 +13,6 @@ export async function load(pageLoadEvent): Promise<ProductPageData> {
 	const selectedNameToValues = _.groupBy(product.attributes, 'name');
 
 	return {
-		mode: pageLoadEvent.url.searchParams.get('mode') as string,
 		product,
 		statuses: nameToValues['status']?.map((v) => v.value),
 		selected_statuses: selectedNameToValues['status']?.map((v) => v.value),

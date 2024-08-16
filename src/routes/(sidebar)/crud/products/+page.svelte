@@ -10,8 +10,8 @@
 	} from 'flowbite-svelte';
 	import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead } from 'flowbite-svelte';
 	import { TableHeadCell, Toolbar, ToolbarButton } from 'flowbite-svelte';
-	import { FilterSolid, SearchSolid } from 'flowbite-svelte-icons';
-	import { EditOutline, PlusOutline, TrashBinSolid } from 'flowbite-svelte-icons';
+	import { EyeOutline, FilterSolid, SearchSolid } from 'flowbite-svelte-icons';
+	import { PlusOutline, TrashBinSolid } from 'flowbite-svelte-icons';
 
 	import MetaTag from '$lib/ui-components/meta/meta-tags.svelte';
 	import ChainBadge from '$lib/ui-components/badges/ChainBadge.svelte';
@@ -149,8 +149,8 @@
 						</div>
 					</TableBodyCell>
 					<TableBodyCell class="space-x-2 p-4">
-						<Button size="sm" class="gap-2 px-3" href="/crud/products/{product.id}?mode=edit">
-							<EditOutline size="sm" /> Edit
+						<Button color="blue" size="sm" class="gap-2 px-3" href="/crud/products/{product.id}">
+							<EyeOutline size="sm" /> View
 						</Button>
 						<Button color="red" size="sm" class="gap-2 px-3">
 							<TrashBinSolid size="sm" /> Delete
