@@ -196,6 +196,7 @@
 						value={data.product.metadata?.cta_url}
 						inputProps={{ name: 'cta_url', disabled: isViewMode }}
 					/>
+					<Label class="w-22 mb-1 me-4 ml-3 mt-3">Social link(s)</Label>
 					<ClonableInputInput
 						name="socials"
 						items={data.product.metadata?.socials}

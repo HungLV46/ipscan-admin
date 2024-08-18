@@ -26,7 +26,7 @@
 	{#if name}
 		<Label class="mb-1 ml-3" {...labelProps}>{name}</Label>
 	{/if}
-	<input type="hidden" name={inputProps?.name} value={JSON.stringify(selectedFiles)} />
-	<Input type="file" on:change={handleFileChange} multiple {..._.omit(inputProps, 'name')} />
+	<input type="hidden" name={`prev_${name}`} value={JSON.stringify(selectedFiles)} />
+	<Input type="file" on:change={handleFileChange} multiple {...inputProps} />
 	<Gallery bind:items={selectedFiles} class="grid-cols-2 gap-4 md:grid-cols-3" />
 </div>

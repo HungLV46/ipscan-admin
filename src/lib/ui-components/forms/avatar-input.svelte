@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Dropzone } from 'flowbite-svelte';
-	import { MinusOutline } from 'flowbite-svelte-icons';
+	import { PlusOutline } from 'flowbite-svelte-icons';
 
 	type Src = string | null | undefined;
 	export let src: Src = undefined;
@@ -23,12 +23,7 @@
 </script>
 
 <div class="relative">
-	<Dropzone
-		{...$$restProps}
-		class="relative h-32 w-32"
-		on:change={handleFileChange}
-		on:click={(event) => console.log(event)}
-	>
+	<Dropzone {...$$restProps} class="relative h-32 w-32" on:change={handleFileChange}>
 		{#if src}
 			<img {src} alt="avatar" />
 		{:else}
@@ -36,18 +31,14 @@
 				{alt}
 			</span>
 		{/if}
-		<!-- little close button to remove the -->
+		<!-- a botton showing that we are editing, doesn't do anything more (at least for now) -->
 		{#if !$$props.disabled}
 			<button
 				class="absolute right-3 top-3 h-5 w-5 rounded-full bg-red-300 p-1 text-red-500 hover:bg-red-500 hover:text-white"
 				style="line-height: 1.25rem; padding: 0;"
 				type="button"
-				on:click={(event) => {
-					src = undefined;
-					event.stopPropagation();
-				}}
 			>
-				<MinusOutline />
+				<PlusOutline />
 			</button>
 		{/if}
 	</Dropzone>

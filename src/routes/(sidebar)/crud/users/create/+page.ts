@@ -1,4 +1,4 @@
-import { listProductAttributes } from '$lib/apis/product/list-product-attributes';
+import { listProductAttributes } from '$lib/apis/product/list-product-attributes.js';
 import _ from 'underscore';
 import type { ProductPageData } from '../+page';
 

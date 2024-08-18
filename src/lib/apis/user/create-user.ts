@@ -1,13 +1,13 @@
 import { config } from '$lib/public-config';
 
 export interface CreateProductRequest {
-	name?: string;
-	owner_id?: number;
-	avatar_img?: string;
-	banner_img?: string;
-	category?: string;
-	description?: string;
-	metadata?: { previews?: string[]; cta_link?: string };
+	name: string;
+	owner_id: number;
+	avatar_img: string;
+	banner_img: string;
+	category: string;
+	description: string;
+	metadata: { previews?: string[]; cta_link?: string };
 	featured?: boolean;
 	attributes?: { name: string; value: string }[];
 	collections?: { chain_id: string; contract_address: string }[];

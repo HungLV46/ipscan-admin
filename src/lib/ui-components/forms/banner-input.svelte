@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Dropzone } from 'flowbite-svelte';
-	import { MinusOutline } from 'flowbite-svelte-icons';
+	import { MinusOutline, PlusOutline } from 'flowbite-svelte-icons';
 	import { twMerge } from 'tailwind-merge';
 
 	type Src = string | null | undefined;
@@ -31,17 +31,14 @@
 				{alt}
 			</span>
 		{/if}
+		<!-- a botton showing that we are editing, doesn't do anything more (at least for now) -->
 		{#if !$$props.disabled}
 			<button
 				class="absolute right-3 top-3 h-5 w-5 rounded-full bg-red-300 p-1 text-red-500 hover:bg-red-500 hover:text-white"
 				style="line-height: 1.25rem; padding: 0;"
 				type="button"
-				on:click={(event) => {
-					src = undefined;
-					event.stopPropagation();
-				}}
 			>
-				<MinusOutline />
+				<PlusOutline />
 			</button>
 		{/if}
 	</Dropzone>
