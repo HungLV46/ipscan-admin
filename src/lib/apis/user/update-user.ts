@@ -10,7 +10,7 @@ export interface UserUpdateRequest {
 		headline?: string;
 		location?: string;
 		socials?: { name: string; url: string }[];
-		wallets: { address: string }[];
+		wallets?: { address: string }[];
 	};
 	attributes?: { name: string; value: string }[];
 }

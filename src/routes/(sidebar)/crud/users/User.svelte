@@ -5,7 +5,6 @@
 	import Delete from './Delete.svelte';
 
 	import Input from '$lib/ui-components/forms/input.svelte';
-	import Textarea from '$lib/ui-components/forms/text-area.svelte';
 	import MetaTag from '$lib/ui-components/meta/meta-tags.svelte';
 	import BannerInput from '$lib/ui-components/forms/banner-input.svelte';
 	import AvatarInput from '$lib/ui-components/forms/avatar-input.svelte';
@@ -28,6 +27,7 @@
 
 	let openDelete: boolean = false;
 	$: isViewMode = mode === PAGE_MODE.VIEW || form?.reload;
+	let deleteId: string | undefined = undefined;
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
@@ -36,7 +36,7 @@
 {#if form?.reload}
 	{window.location.reload()}
 {/if}
-<form method="POST" enctype="multipart/form-data" use:enhance>
+<form method="POST" action="?/upsert" enctype="multipart/form-data" use:enhance>
 	<main class="relative h-full w-full overflow-y-auto bg-white dark:bg-gray-800">
 		<div class="mt-10 p-4">
 			{#if form?.error}
@@ -87,6 +87,7 @@
 								size="sm"
 								class="w-36 gap-2 px-3"
 								on:click={() => {
+									deleteId = data.user.id?.toString();
 									openDelete = true;
 								}}
 							>
@@ -117,7 +118,7 @@
 							placeholder="humble and handsome"
 							class="w-22 mb-2 me-4 mt-3 w-full"
 							value={data.user.additional_info?.headline}
-							textareaProps={{ name: 'headline', disabled: isViewMode }}
+							inputProps={{ name: 'headline', disabled: isViewMode }}
 						/>
 						<MultiSelectWithSearch
 							name="Tags/Keywords"
@@ -138,6 +139,13 @@
 						class="w-22 mb-2 me-4 mt-3"
 						value={data.user.bio}
 						inputProps={{ name: 'bio', disabled: isViewMode }}
+					/>
+					<Input
+						name="Email"
+						placeholder="e.g. Robert Perez"
+						class="w-22 mb-2 me-4 mt-3"
+						value={data.user.email}
+						inputProps={{ name: 'email', disabled: isViewMode }}
 					/>
 					<Input
 						name="Location"
@@ -167,8 +175,8 @@
 					/>
 					<Label class="w-22 mb-1 me-4 ml-3 mt-3">Wallet Addreses</Label>
 					<ClonableInputInput
-						name="wallet_addresses"
-						items={data.user.additional_info?.wallets}
+						name="wallets"
+						items={data.wallets}
 						inputPropsList={[
 							{
 								name: 'Address',
@@ -185,4 +193,7 @@
 	</main>
 </form>
 
-<Delete bind:open={openDelete} />
+<form method="POST" action="?/delete">
+	<input name="deleteId" type="hidden" bind:value={deleteId} />
+	<Delete bind:open={openDelete} />
+</form>

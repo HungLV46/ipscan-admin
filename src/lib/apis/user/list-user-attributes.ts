@@ -6,12 +6,14 @@ export interface UserAttribute {
 	value: string;
 }
 
-export async function listUserAttributes(): Promise<ListResponse<UserAttribute>> {
+export async function listUserAttributes(
+	includeNames: string[]
+): Promise<ListResponse<UserAttribute>> {
 	const operationName = 'listUserAttributes';
 
 	const operationsDoc = `
-    query ${operationName} {
-			ipscan_user_attributes(distinct_on: [name, value]) {
+    query ${operationName}($names: [String!] = "") {
+			ipscan_user_attributes(distinct_on: [name, value], where: {name: {_in: $names}}) {
 				name
 				value
 			}
@@ -22,7 +24,7 @@ export async function listUserAttributes(): Promise<ListResponse<UserAttribute>>
 		method: 'POST',
 		body: JSON.stringify({
 			query: operationsDoc,
-			variables: {},
+			variables: { names: includeNames },
 			operationName: operationName
 		})
 	})

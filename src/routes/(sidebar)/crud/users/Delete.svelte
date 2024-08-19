@@ -12,7 +12,7 @@
 	</h3>
 
 	<div class="flex items-center justify-center">
-		<Button href="/" color="red" class="mr-2">Yes, I'm sure</Button>
+		<Button type="submit" color="red" class="mr-2">Yes, I'm sure</Button>
 		<Button color="alternative" on:click={() => (open = false)}>No, cancel</Button>
 	</div>
 </Modal>

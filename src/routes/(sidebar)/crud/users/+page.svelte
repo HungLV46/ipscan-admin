@@ -31,6 +31,7 @@
 	}
 
 	let openDelete: boolean = false;
+	let deleteId: string | undefined = undefined;
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
@@ -82,7 +83,6 @@
 	<!-- User data section -->
 	<Table>
 		<TableHead class="border-y border-gray-200 bg-gray-100 dark:border-gray-700">
-			<TableHeadCell class="w-4 p-4"><Checkbox /></TableHeadCell>
 			{#each ['Creators', 'Products', 'Collections', 'NFTs'] as title}
 				<TableHeadCell class="p-4 font-medium">{title}</TableHeadCell>
 			{/each}
@@ -91,8 +91,6 @@
 		<TableBody>
 			{#each data.items as user}
 				<TableBodyRow class="text-base">
-					<TableBodyCell class="w-4 p-4"><Checkbox /></TableBodyCell>
-
 					<TableBodyCell class="mr-12 flex items-center space-x-6 whitespace-nowrap p-4">
 						<Avatar src={user.avatar_img} />
 						<div class="text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -122,7 +120,15 @@
 						<Button color="blue" size="sm" class="gap-2 px-3" href="/crud/users/{user.id}">
 							<EyeOutline size="sm" /> View
 						</Button>
-						<Button color="red" size="sm" class="gap-2 px-3">
+						<Button
+							color="red"
+							size="sm"
+							class="gap-2 px-3"
+							on:click={() => {
+								deleteId = user.id?.toString();
+								openDelete = true;
+							}}
+						>
 							<TrashBinSolid size="sm" /> Delete
 						</Button>
 					</TableBodyCell>
@@ -139,5 +145,7 @@
 		handleSearch(event.detail);
 	}}
 />
-
-<Delete bind:open={openDelete} />
+<form method="POST" action="?/delete">
+	<input name="deleteId" type="hidden" bind:value={deleteId} />
+	<Delete bind:open={openDelete} />
+</form>

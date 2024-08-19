@@ -6,15 +6,16 @@ import type { UserPageData } from '../+page';
 export async function load(pageLoadEvent): Promise<UserPageData> {
 	const [user, userAttributes] = await Promise.all([
 		getUserById(parseInt(pageLoadEvent.params.id)),
-		listUserAttributes()
+		listUserAttributes(['tag'])
 	]);
 
 	const nameToValues = _.groupBy(userAttributes.items, 'name');
-	const selectedNameToValues = _.groupBy(user.attributes, 'name');
+	const selectedNameToValues = _.groupBy(user.attributes || [], 'name');
 
 	return {
 		user,
 		tags: nameToValues['tag']?.map((v) => v.value),
-		selected_tags: selectedNameToValues['tag']?.map((v) => v.value)
+		selected_tags: selectedNameToValues['tag']?.map((v) => v.value),
+		wallets: selectedNameToValues['wallet']?.map((v) => ({ address: v.value }))
 	};
 }

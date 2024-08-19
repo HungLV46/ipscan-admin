@@ -7,7 +7,8 @@ import type { UserGetResponseData } from '$lib/apis/user/get-user';
 export interface UserPageData {
 	user: UserGetResponseData;
 	tags: string[];
-	selected_tags: string[];
+	selected_tags?: string[];
+	wallets?: { address: string }[];
 }
 
 export async function load(): Promise<ListWithPagingResponse<UserResponse>> {

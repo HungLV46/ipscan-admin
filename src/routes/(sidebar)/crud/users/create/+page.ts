@@ -1,30 +1,27 @@
-import { listProductAttributes } from '$lib/apis/product/list-product-attributes.js';
+import { listUserAttributes } from '$lib/apis/user/list-user-attributes';
 import _ from 'underscore';
-import type { ProductPageData } from '../+page';
+import type { UserPageData } from '../+page';
 
-export async function load(): Promise<ProductPageData> {
-	const [productAttributes] = await Promise.all([listProductAttributes()]);
+export async function load(): Promise<UserPageData> {
+	const userAttributes = await listUserAttributes(['tag']);
 
-	const nameToValues = _.groupBy(productAttributes.items, 'name');
+	const nameToValues = _.groupBy(userAttributes.items, 'name');
 
 	return {
-		product: {
+		user: {
 			name: '',
-			owner: {
-				id: undefined,
-				name: undefined
-			},
-			avatar_img: '',
+			email: '',
+			bio: '',
 			banner_img: '',
-			category: '',
-			description: '',
-			featured_at: null,
-			attributes: [],
-			metadata: undefined
+			avatar_img: '',
+			additional_info: {
+				headline: '',
+				location: '',
+				socials: []
+			},
+			attributes: []
 		},
-		statuses: nameToValues['status']?.map((v) => v.value),
-		genres: nameToValues['genre']?.map((v) => v.value),
-		player_supports: nameToValues['player support']?.map((v) => v.value),
-		game_modes: nameToValues['game mode']?.map((v) => v.value)
+		tags: nameToValues['tag']?.map((v) => v.value),
+		wallets: []
 	};
 }

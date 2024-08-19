@@ -1,12 +1,12 @@
 // import { config } from "$lib/public-config";
 
+import { config } from '$lib/public-config';
+
 export async function upload(file: File) {
 	const formData = new FormData();
 	formData.append('file', file);
 
-	// TODO use config
-	// const response = await fetch(`${config.apiEndpoint}/upload`, {
-	const response = await fetch(`http://localhost:3000/upload`, {
+	const response = await fetch(`${config.apiEndpoint}/upload`, {
 		method: 'POST',
 		body: formData
 	});

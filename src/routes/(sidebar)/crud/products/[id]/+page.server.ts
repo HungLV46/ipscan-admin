@@ -1,14 +1,15 @@
+import { deleteProduct } from '$lib/apis/product/delete-product';
 import { updateProduct } from '$lib/apis/product/update-product.js';
 import { upload } from '$lib/apis/utils/upload';
 import { PAGE_MODE } from '$lib/constants.js';
-import { fail } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({ params, request }) => {
+	upsert: async ({ params, request }) => {
 		const id = parseInt(params.id);
 		const data = await request.formData();
 
-		console.log('form data', data);
+		console.log('form', data);
 
 		let banner = data.get('banner_img') as File;
 		let avatar = data.get('avatar_img') as File;
@@ -32,8 +33,11 @@ export const actions = {
 			metadata: {
 				previews: uploadedFiles[2]
 					? uploadedFiles.slice(2).map((file) => file?.data.s3_url as string)
-					: undefined,
-				cta_url: data.get('cta_url')?.toString()
+					: JSON.parse(data.get('prev_previews')?.toString() || '[]').map(
+							(img: { src: string }) => img.src
+						),
+				cta_url: data.get('cta_url')?.toString(),
+				socials: JSON.parse(data.get('socials')?.toString() || '[]')
 			},
 			attributes: [
 				...JSON.parse(data.get('statuses')?.toString() || '[]').map((value: string) => ({
@@ -55,19 +59,32 @@ export const actions = {
 			]
 		};
 
-		console.log('requestData', requestData);
+		console.log('request', requestData);
 
 		const updateResponse = await updateProduct(id, requestData);
 
 		const responseData = await updateResponse.json();
-
-		console.log('responseData', responseData); // TODO remove
 
 		if (updateResponse.status === 200) {
 			// TODO find a more systematical way to reload a page
 			return fail(responseData.statusCode, { reload: true, mode: PAGE_MODE.VIEW });
 		} else {
 			return fail(responseData.statusCode, responseData);
+		}
+	},
+	delete: async ({ request }) => {
+		const id = (await request.formData()).get('deleteId')?.toString();
+
+		console.log('id', id);
+
+		if (!id) return fail(400, { missingId: true });
+
+		const resposne = await deleteProduct(parseInt(id));
+
+		console.log(resposne);
+
+		if (resposne.status === 200) {
+			throw redirect(303, '/crud/products');
 		}
 	}
 };

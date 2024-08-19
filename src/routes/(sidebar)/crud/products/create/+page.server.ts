@@ -3,7 +3,7 @@ import { upload } from '$lib/apis/utils/upload.js';
 import { fail, redirect } from '@sveltejs/kit';
 
 export const actions = {
-	default: async ({ request }) => {
+	upsert: async ({ request }) => {
 		const data = await request.formData();
 
 		let banner = data.get('banner_img') as File;
@@ -29,7 +29,8 @@ export const actions = {
 				previews: uploadedFiles[2]
 					? uploadedFiles.slice(2).map((file) => file?.data.s3_url as string)
 					: undefined,
-				cta_url: data.get('cta_url')?.toString()
+				cta_url: data.get('cta_url')?.toString(),
+				socials: JSON.parse(data.get('socials')?.toString() || '[]')
 			},
 			attributes: [
 				...JSON.parse(data.get('statuses')?.toString() || '[]').map((value: string) => ({

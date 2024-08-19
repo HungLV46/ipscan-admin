@@ -39,6 +39,8 @@
 
 	let openDelete: boolean = false;
 	$: isViewMode = mode === PAGE_MODE.VIEW || form?.reload;
+
+	let deleteId: string | undefined = undefined;
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
@@ -47,7 +49,7 @@
 {#if form?.reload}
 	{window.location.reload()}
 {/if}
-<form method="POST" enctype="multipart/form-data" use:enhance>
+<form method="POST" action="?/upsert" enctype="multipart/form-data" use:enhance>
 	<main class="relative h-full w-full overflow-y-auto bg-white dark:bg-gray-800">
 		<div class="mt-10 p-4">
 			{#if form?.error}
@@ -117,6 +119,7 @@
 								size="sm"
 								class="w-36 gap-2 px-3"
 								on:click={() => {
+									deleteId = data.product.id?.toString();
 									openDelete = true;
 								}}
 							>
@@ -271,4 +274,7 @@
 	</main>
 </form>
 
-<Delete bind:open={openDelete} />
+<form method="POST" action="?/delete">
+	<input name="deleteId" type="hidden" bind:value={deleteId} />
+	<Delete bind:open={openDelete} />
+</form>

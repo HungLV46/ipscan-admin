@@ -22,8 +22,6 @@ export async function listUser(
 ): Promise<ListWithPagingResponse<UserResponse>> {
 	const operationName = 'ipscanListCreators';
 
-	console.log(variables);
-
 	// TODO check query performance
 	const operationsDoc = `
     query ${operationName}($name: String, $limit: Int = 10, $offset: Int = 0) {
@@ -71,7 +69,6 @@ export async function listUser(
 	})
 		.then((response) => response.json())
 		.then((response) => {
-			console.log('response', response);
 			const items = [];
 			// sum all number of collections & nfts
 			for (const user of response.data.ipscan_ipscan_user) {

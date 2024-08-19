@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Gallery, Input, Label, type ImgType } from 'flowbite-svelte';
+	import { Gallery, Helper, Input, Label, type ImgType } from 'flowbite-svelte';
 	import _ from 'underscore';
 
 	export let labelProps: typeof $$props | undefined = undefined;
@@ -26,7 +26,10 @@
 	{#if name}
 		<Label class="mb-1 ml-3" {...labelProps}>{name}</Label>
 	{/if}
-	<input type="hidden" name={`prev_${name}`} value={JSON.stringify(selectedFiles)} />
+	<input type="hidden" name={`prev_${inputProps?.name}`} value={JSON.stringify(selectedFiles)} />
 	<Input type="file" on:change={handleFileChange} multiple {...inputProps} />
+	<Helper class="mb-2 ml-3" color="red"
+		>{@html 'When updating, select new files will remove all existed ones'}</Helper
+	>
 	<Gallery bind:items={selectedFiles} class="grid-cols-2 gap-4 md:grid-cols-3" />
 </div>

@@ -1,19 +1,19 @@
 <script lang="ts">
 	import { PAGE_MODE } from '$lib/constants';
 	import MetaTag from '$lib/ui-components/meta/meta-tags.svelte';
-	import type { ProductPageData } from '../+page';
-	import ProductPage from '../Product.svelte';
+	import type { UserPageData } from '../+page';
+	import UserPage from '../User.svelte';
 
-	export let data: ProductPageData;
+	export let data: UserPageData;
 	export let mode: string = PAGE_MODE.CREATE;
 	export let form: any = undefined;
 
-	const path: string = '/crud/products';
-	$: description = `A place to create a single product`;
-	$: title = `Admin – Product create`;
-	$: subtitle = `Products create`;
+	const path: string = '/crud/users';
+	$: description = `A place to create a single user`;
+	$: title = `Admin – User create`;
+	$: subtitle = `Users create`;
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
 
-<ProductPage {data} bind:mode bind:form />
+<UserPage {data} bind:mode bind:form />

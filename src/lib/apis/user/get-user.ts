@@ -1,7 +1,7 @@
 import { config } from '$lib/public-config';
 
 export interface UserGetResponseData {
-	id: number;
+	id?: number;
 	name?: string;
 	email?: string;
 	bio?: string;
@@ -11,26 +11,29 @@ export interface UserGetResponseData {
 		headline?: string;
 		location?: string;
 		socials?: { name: string; url: string }[];
-		wallets: { address: string }[];
 	};
-	attributes: { name: string; value: string }[];
+	attributes?: { name: string; value: string }[];
 }
 
 export async function getUserById(id: number): Promise<UserGetResponseData> {
 	const operationName = 'getUserById';
 
 	const operationsDoc = `
-    query getUserById($id: Int = 0) {
-      ipscan_ipscan_user(where: {id: {_eq: $id}}) {
-        id
-        name
-        email
-        bio
-        banner_img
-        avatar_img
-        additional_info
-      }
-    }
+    query ${operationName}($id: Int = 13) {
+			ipscan_ipscan_user(where: {id: {_eq: $id}}) {
+				id
+				name
+				email
+				bio
+				banner_img
+				avatar_img
+				additional_info
+				attributes {
+					name
+					value
+				}
+			}
+		}
   `;
 
 	return fetch(config.graphqlEndpoint, {
