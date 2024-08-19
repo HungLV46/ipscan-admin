@@ -55,6 +55,14 @@ export const actions = {
 				...JSON.parse(data.get('game_modes')?.toString() || '[]').map((value: string) => ({
 					name: 'game mode',
 					value
+				})),
+				...JSON.parse(data.get('manga_statuses')?.toString() || '[]').map((value: string) => ({
+					name: 'manga status',
+					value
+				})),
+				...JSON.parse(data.get('manga_genres')?.toString() || '[]').map((value: string) => ({
+					name: 'manga genre',
+					value
 				}))
 			]
 		};

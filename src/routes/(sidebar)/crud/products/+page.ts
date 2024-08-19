@@ -14,6 +14,10 @@ export interface ProductPageData {
 	selected_player_supports?: string[];
 	game_modes: string[];
 	selected_game_modes?: string[];
+	manga_statuses: string[];
+	selected_manga_statuses?: string[];
+	manga_genres: string[];
+	selected_manga_genres?: string[];
 }
 
 export async function load(): Promise<ListWithPagingResponse<ProductResponseData>> {

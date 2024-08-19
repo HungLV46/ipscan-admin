@@ -21,6 +21,10 @@ export async function load(pageLoadEvent): Promise<ProductPageData> {
 		player_supports: nameToValues['player support']?.map((v) => v.value),
 		selected_player_supports: selectedNameToValues['player support']?.map((v) => v.value),
 		game_modes: nameToValues['game mode']?.map((v) => v.value),
-		selected_game_modes: selectedNameToValues['game mode']?.map((v) => v.value)
+		selected_game_modes: selectedNameToValues['game mode']?.map((v) => v.value),
+		manga_statuses: nameToValues['manga status']?.map((v) => v.value),
+		selected_manga_statuses: selectedNameToValues['manga status']?.map((v) => v.value),
+		manga_genres: nameToValues['manga genre']?.map((v) => v.value),
+		selected_manga_genres: selectedNameToValues['manga genre']?.map((v) => v.value)
 	};
 }

@@ -41,6 +41,7 @@
 	$: isViewMode = mode === PAGE_MODE.VIEW || form?.reload;
 
 	let deleteId: string | undefined = undefined;
+	let category = data.product.category || '';
 </script>
 
 <MetaTag {path} {description} {title} {subtitle} />
@@ -101,7 +102,7 @@
 						<Select
 							class="w-22 me-4"
 							items={PRODUCT_CATEGORIES.map((c) => ({ name: c, value: c }))}
-							selected={data.product.category || ''}
+							bind:selected={category}
 							selectProps={{
 								name: 'category',
 								disabled: isViewMode
@@ -224,50 +225,81 @@
 					<div class="mb-4 flex items-center justify-between">
 						<h3 class="text-lg font-semibold text-gray-900 dark:text-white">Type-Specific</h3>
 					</div>
-					<MultiSelectWithSearch
-						name="Status"
-						placeholder="e.g. Ethereum"
-						class="mb-2 me-4 mt-3 w-full"
-						items={data.statuses}
-						selected={data.selected_statuses}
-						multiSelectProps={{
-							name: 'statuses',
-							allowUserOptions: 'append',
-							disabled: isViewMode
-						}}
-					/>
-					<MultiSelectWithSearch
-						name="Player info"
-						placeholder="e.g. Ethereum"
-						class="mb-2 me-4 mt-3 w-full"
-						items={data.player_supports}
-						selected={data.selected_player_supports}
-						multiSelectProps={{
-							name: 'players_infos',
-							allowUserOptions: 'append',
-							disabled: isViewMode
-						}}
-					/>
-					<MultiSelectWithSearch
-						name="Genre"
-						placeholder="e.g. Ethereum"
-						class="mb-2 me-4 mt-3 w-full"
-						items={data.genres}
-						selected={data.selected_genres}
-						multiSelectProps={{ name: 'genres', allowUserOptions: 'append', disabled: isViewMode }}
-					/>
-					<MultiSelectWithSearch
-						name="Game mode"
-						placeholder="e.g. Ethereum"
-						class="mb-2 me-4 mt-3 w-full"
-						items={data.game_modes}
-						selected={data.selected_game_modes}
-						multiSelectProps={{
-							name: 'game_modes',
-							allowUserOptions: 'append',
-							disabled: isViewMode
-						}}
-					/>
+					{#if category === PRODUCT_CATEGORIES[0]}
+						<MultiSelectWithSearch
+							name="Status"
+							placeholder="e.g. ongoign"
+							class="mb-2 me-4 mt-3 w-full"
+							items={data.statuses}
+							selected={data.selected_statuses}
+							multiSelectProps={{
+								name: 'statuses',
+								allowUserOptions: 'append',
+								disabled: isViewMode
+							}}
+						/>
+						<MultiSelectWithSearch
+							name="Player info"
+							placeholder="e.g. pvp"
+							class="mb-2 me-4 mt-3 w-full"
+							items={data.player_supports}
+							selected={data.selected_player_supports}
+							multiSelectProps={{
+								name: 'players_infos',
+								allowUserOptions: 'append',
+								disabled: isViewMode
+							}}
+						/>
+						<MultiSelectWithSearch
+							name="Genre"
+							placeholder="e.g. horor"
+							class="mb-2 me-4 mt-3 w-full"
+							items={data.genres}
+							selected={data.selected_genres}
+							multiSelectProps={{
+								name: 'genres',
+								allowUserOptions: 'append',
+								disabled: isViewMode
+							}}
+						/>
+						<MultiSelectWithSearch
+							name="Game mode"
+							placeholder="e.g. survivor"
+							class="mb-2 me-4 mt-3 w-full"
+							items={data.game_modes}
+							selected={data.selected_game_modes}
+							multiSelectProps={{
+								name: 'game_modes',
+								allowUserOptions: 'append',
+								disabled: isViewMode
+							}}
+						/>
+					{:else}
+						<MultiSelectWithSearch
+							name="Status"
+							placeholder="e.g. launching"
+							class="mb-2 me-4 mt-3 w-full"
+							items={data.manga_statuses}
+							selected={data.selected_manga_statuses}
+							multiSelectProps={{
+								name: 'manga_statuses',
+								allowUserOptions: 'append',
+								disabled: isViewMode
+							}}
+						/>
+						<MultiSelectWithSearch
+							name="Genre"
+							placeholder="e.g. horor"
+							class="mb-2 me-4 mt-3 w-full"
+							items={data.manga_genres}
+							selected={data.selected_manga_genres}
+							multiSelectProps={{
+								name: 'manga_genres',
+								allowUserOptions: 'append',
+								disabled: isViewMode
+							}}
+						/>
+					{/if}
 				</Card>
 			</Card>
 		</div>

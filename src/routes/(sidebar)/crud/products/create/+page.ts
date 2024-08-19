@@ -25,6 +25,8 @@ export async function load(): Promise<ProductPageData> {
 		statuses: nameToValues['status']?.map((v) => v.value),
 		genres: nameToValues['genre']?.map((v) => v.value),
 		player_supports: nameToValues['player support']?.map((v) => v.value),
-		game_modes: nameToValues['game mode']?.map((v) => v.value)
+		game_modes: nameToValues['game mode']?.map((v) => v.value),
+		manga_statuses: nameToValues['manga status']?.map((v) => v.value),
+		manga_genres: nameToValues['manga genre']?.map((v) => v.value)
 	};
 }
