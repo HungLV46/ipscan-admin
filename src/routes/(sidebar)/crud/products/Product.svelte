@@ -181,15 +181,19 @@
 						value={data.product.description}
 						textareaProps={{ name: 'about', disabled: isViewMode }}
 					/>
-					<Input
+					<Select
 						name="Creator"
-						placeholder="e.g. Robert Perez"
-						class="w-22 mb-2 me-4 mt-3"
-						value={data.product.owner?.name}
-						inputProps={{ name: 'creator', disabled: isViewMode }}
+						class="w-22 mb-2 me-4 mt-3 w-full"
+						items={data.users.map((u) => ({ name: u.name, value: u.id.toString() }))}
+						selected={data.users.find((u) => u.id === data.product.owner.id)?.id?.toString() || ''}
+						selectProps={{
+							name: 'creator',
+							disabled: isViewMode
+						}}
 					/>
 					<ImageInput
 						name="Overview pictures/media"
+						class="w-22 mb-2 me-4 mt-3"
 						selectedFiles={data.product.metadata?.previews?.map((p) => ({ src: p }))}
 						inputProps={{ name: 'previews', disabled: isViewMode }}
 					/>

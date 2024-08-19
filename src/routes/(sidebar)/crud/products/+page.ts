@@ -3,9 +3,11 @@ import type { ListWithPagingResponse } from '$lib/apis/types.js';
 import * as _ from 'underscore';
 
 import { type ProductGetResponseData } from '$lib/apis/product/get-product';
+import type { UserDropdown } from '$lib/apis/user/list-users-dropdown';
 
 export interface ProductPageData {
 	product: ProductGetResponseData;
+	users: UserDropdown[];
 	statuses: string[];
 	selected_statuses?: string[];
 	genres: string[];
