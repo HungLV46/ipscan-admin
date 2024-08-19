@@ -9,8 +9,6 @@ export const actions = {
 		const id = parseInt(params.id);
 		const data = await request.formData();
 
-		console.log('form', data);
-
 		let banner = data.get('banner_img') as File;
 		let avatar = data.get('avatar_img') as File;
 		let previews = data.getAll('previews') as File[];
@@ -67,8 +65,6 @@ export const actions = {
 			]
 		};
 
-		console.log('request', requestData);
-
 		const updateResponse = await updateProduct(id, requestData);
 
 		const responseData = await updateResponse.json();
@@ -83,16 +79,16 @@ export const actions = {
 	delete: async ({ request }) => {
 		const id = (await request.formData()).get('deleteId')?.toString();
 
-		console.log('id', id);
-
-		if (!id) return fail(400, { missingId: true });
+		if (!id) return fail(400, { error: 400, message: 'Id is missing' });
 
 		const resposne = await deleteProduct(parseInt(id));
 
-		console.log(resposne);
+		const responseData = await resposne.json();
 
 		if (resposne.status === 200) {
 			throw redirect(303, '/crud/products');
 		}
+
+		return fail(resposne.status, responseData);
 	}
 };

@@ -193,7 +193,7 @@
 	</main>
 </form>
 
-<form method="POST" action="?/delete">
+<form method="POST" action="?/delete" use:enhance>
 	<input name="deleteId" type="hidden" bind:value={deleteId} />
 	<Delete bind:open={openDelete} />
 </form>

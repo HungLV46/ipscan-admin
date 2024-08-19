@@ -5,16 +5,16 @@ export const actions = {
 	delete: async ({ request }) => {
 		const id = (await request.formData()).get('deleteId')?.toString();
 
-		console.log('id', id);
+		if (!id) return fail(400, { error: 400, message: 'Id is missing' });
 
-		if (!id) return fail(400, { missingId: true });
+		const resposne = await deleteUser(parseInt(id));
 
-		const response = await deleteUser(parseInt(id));
+		const responseData = await resposne.json();
 
-		console.log(await response.json());
-
-		if (response.status === 200) {
+		if (resposne.status === 200) {
 			throw redirect(303, '/crud/users');
 		}
+
+		return fail(resposne.status, responseData);
 	}
 };

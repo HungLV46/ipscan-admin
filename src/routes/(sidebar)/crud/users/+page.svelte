@@ -13,6 +13,8 @@
 	import _ from 'underscore';
 	import Delete from './Delete.svelte';
 	import type { ListWithPagingResponse } from '$lib/apis/types';
+	import { enhance } from '$app/forms';
+	import Alert from '$lib/ui-components/views/alert.svelte';
 
 	const path: string = '/crud/users';
 	const description: string = 'A place to create user';
@@ -20,6 +22,7 @@
 	const subtitle: string = 'Users list';
 
 	export let data: ListWithPagingResponse<UserResponse>;
+	export let form;
 
 	let searchConditions: ListUserQuery = _.omit(data.paging, 'total');
 	async function handleSearch(pageQuery?: { limit: number; offset: number }) {
@@ -46,6 +49,13 @@
 			All users
 		</Heading>
 
+		{#if form?.error}
+			<Alert
+				class="fixed left-[60%] z-20 translate-x-[-50%]"
+				type="error"
+				description={form.message}
+			/>
+		{/if}
 		<Toolbar embedded class="w-full py-4 text-gray-500  dark:text-gray-400">
 			<Input
 				inputProps={{ placeholder: 'Search for users' }}
@@ -145,7 +155,8 @@
 		handleSearch(event.detail);
 	}}
 />
-<form method="POST" action="?/delete">
+
+<form method="POST" action="?/delete" use:enhance>
 	<input name="deleteId" type="hidden" bind:value={deleteId} />
 	<Delete bind:open={openDelete} />
 </form>

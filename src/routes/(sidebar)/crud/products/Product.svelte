@@ -185,7 +185,8 @@
 						name="Creator"
 						class="w-22 mb-2 me-4 mt-3 w-full"
 						items={data.users.map((u) => ({ name: u.name, value: u.id.toString() }))}
-						selected={data.users.find((u) => u.id === data.product.owner.id)?.id?.toString() || ''}
+						selected={data.users.find((u) => u.id === data.product?.owner?.id)?.id?.toString() ||
+							''}
 						selectProps={{
 							name: 'creator',
 							disabled: isViewMode
@@ -310,7 +311,7 @@
 	</main>
 </form>
 
-<form method="POST" action="?/delete">
+<form method="POST" action="?/delete" use:enhance>
 	<input name="deleteId" type="hidden" bind:value={deleteId} />
 	<Delete bind:open={openDelete} />
 </form>

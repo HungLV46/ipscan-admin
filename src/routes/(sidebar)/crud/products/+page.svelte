@@ -26,12 +26,14 @@
 	import _ from 'underscore';
 	import Delete from './Delete.svelte';
 	import type { ListWithPagingResponse } from '$lib/apis/types';
+	import Alert from '$lib/ui-components/views/alert.svelte';
 
 	const path: string = '/crud/products';
 	const description: string = 'A place to create product';
 	const title: string = 'Admin – Products list';
 	const subtitle: string = 'Products list';
 
+	export let form;
 	export let data: ListWithPagingResponse<ProductResponseData>;
 	const extractChainNames = (product: ProductResponseData) =>
 		product.attributes.filter((att) => att.name === 'Chain').map((att) => att.value);
@@ -61,6 +63,13 @@
 			All products
 		</Heading>
 
+		{#if form?.error}
+			<Alert
+				class="fixed left-[60%] z-20 translate-x-[-50%]"
+				type="error"
+				description={form.message}
+			/>
+		{/if}
 		<Toolbar embedded class="w-full py-4 text-gray-500  dark:text-gray-400">
 			<Input
 				inputProps={{ placeholder: 'Search for products' }}

@@ -64,8 +64,6 @@ export const actions = {
 
 		const responseData = await createResponse.json();
 
-		console.log('responseData', responseData); // TODO remove
-
 		if (createResponse.status === 200) {
 			throw redirect(303, `/crud/products/${responseData.data.id}`);
 		} else {

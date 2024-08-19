@@ -13,7 +13,17 @@
 	</h3>
 
 	<div class="flex items-center justify-center">
-		<Button type="submit" color="red" class="mr-2">Yes, I'm sure</Button>
+		<Button
+			type="button"
+			color="red"
+			class="mr-2"
+			on:click={async (event) => {
+				await event?.target
+					?.closest('form')
+					.submit()
+					.then(() => (open = false));
+			}}>Yes, I'm sure</Button
+		>
 		<Button color="alternative" on:click={() => (open = false)}>No, cancel</Button>
 	</div>
 </Modal>
