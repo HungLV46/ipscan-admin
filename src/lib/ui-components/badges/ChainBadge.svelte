@@ -1,23 +1,18 @@
 <script lang="ts">
+	import { CHAINS } from '$lib/constants';
 	import { Badge } from 'flowbite-svelte';
 	import type { BadgeProps } from 'flowbite-svelte/Badge.svelte';
 
-	export let chainName: string;
+	export let chainId: string;
 	export let dark: boolean = false;
 
-	const chains: Record<string, string> = {
-		'Aura network': 'Aura network',
-		Ethereum: 'Ethereum',
-		'Arbitrum One': 'Arbitrum One',
-		'Avalanche C-Chain': 'Avalanche C-Chain'
+	const colors: Record<string, BadgeProps['color']> = {
+		'6322': 'green',
+		'1': 'red',
+		'11155111': 'yellow'
 	};
 
-	const colors: Record<string, BadgeProps['color']> = {
-		'Aura network': 'green',
-		Ethereum: 'red',
-		'Arbitrum One': 'yellow',
-		'Avalanche C-Chain': 'purple'
-	};
+	console.log(chainId);
 </script>
 
-<Badge color={colors[chainName] ?? 'dark'} border={dark}>{chains[chainName] ?? 'Unknown'}</Badge>
+<Badge color={colors[chainId] ?? 'dark'} border={dark}>{CHAINS[chainId] ?? 'Unknown'}</Badge>

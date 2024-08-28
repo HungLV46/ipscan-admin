@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		Avatar,
-		Badge,
-		Breadcrumb,
-		BreadcrumbItem,
-		Button,
-		Checkbox,
-		Heading
-	} from 'flowbite-svelte';
+	import { Avatar, Badge, Breadcrumb, BreadcrumbItem, Button, Heading } from 'flowbite-svelte';
 	import { Table, TableBody, TableBodyCell, TableBodyRow, TableHead } from 'flowbite-svelte';
 	import { TableHeadCell, Toolbar, ToolbarButton } from 'flowbite-svelte';
 	import { EyeOutline, FilterSolid, SearchSolid } from 'flowbite-svelte-icons';
@@ -35,8 +27,12 @@
 
 	export let form;
 	export let data: ListWithPagingResponse<ProductResponseData>;
-	const extractChainNames = (product: ProductResponseData) =>
-		product.attributes.filter((att) => att.name === 'Chain').map((att) => att.value);
+	const extractChainIds = (product: ProductResponseData) => {
+		const chainIds = product.product_collections.map(
+			(pc: { collection: { chain_id: string } }) => pc.collection.chain_id
+		);
+		return [...new Set(chainIds)];
+	};
 
 	let searchConditions: ListProductQuery = _.omit(data.paging, 'total');
 	async function handleSearch(pageQuery?: { limit: number; offset: number }) {
@@ -136,8 +132,8 @@
 					</TableBodyCell>
 
 					<TableBodyCell class="p-4">
-						{#each extractChainNames(product) as chainName, index}
-							<ChainBadge {chainName} />
+						{#each extractChainIds(product) as chainId, index}
+							<ChainBadge {chainId} />
 							<!-- new line for each 2 chains-->
 							{#if index % 2 === 1}
 								<br />

@@ -18,6 +18,7 @@ export interface ProductResponseData {
 	description: string;
 	created_at: string;
 	featured_at: string;
+	product_collections: { collection: { chain_id: string } }[];
 	attributes: [{ name: string; value: string }];
 }
 
@@ -55,6 +56,11 @@ export async function listProduct(
         }
         owner {
           name
+        }
+        product_collections {
+          collection {
+            chain_id
+          }
         }
       }
       ipscan_products_aggregate(where: {name: {_ilike: $name}, category: {_eq: $category}}) {
