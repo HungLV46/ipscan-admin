@@ -10,10 +10,19 @@ export const actions = {
 		let banner = data.get('banner_img') as File;
 		let avatar = data.get('avatar_img') as File;
 
-		const uploadedFiles = await Promise.all([
-			banner.size > 0 ? upload(banner) : undefined,
-			avatar.size > 0 ? upload(avatar) : undefined
-		]);
+		let uploadedFiles;
+		try {
+			uploadedFiles = await Promise.all([
+				banner.size > 0 ? upload(banner) : undefined,
+				avatar.size > 0 ? upload(avatar) : undefined
+			]);
+		} catch (error: any) {
+			console.log('cannot upload image', error);
+			return fail(500, {
+				error: 'Cannot upload image',
+				message: `Cannot upload image`
+			});
+		}
 
 		const requestData = {
 			banner_img: uploadedFiles[0] ? uploadedFiles[0].data.s3_url : undefined,
