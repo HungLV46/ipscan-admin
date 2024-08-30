@@ -11,7 +11,8 @@ export const CHAINS = {
 	'42161': 'arbitrum',
 	'10': 'optimism',
 	'6322': 'aura network',
-	'11155111': 'sepolia'
+	'11155111': 'sepolia',
+	'1513': 'story testnet'
 } as { [key: string]: string };
 
 export const SOCIALS = ['discord', 'twitter', 'telegram'];

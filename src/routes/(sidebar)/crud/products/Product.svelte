@@ -123,6 +123,7 @@
 									deleteId = data.product.id?.toString();
 									openDelete = true;
 								}}
+								disabled={form?.reload}
 							>
 								<TrashBinSolid size="sm" /> Delete
 							</Button>
@@ -136,7 +137,13 @@
 									<EditOutline size="sm" /> Edit
 								</Button>
 							{:else}
-								<Button type="submit" size="sm" class="w-36 gap-2 px-3" color="green">
+								<Button
+									type="submit"
+									size="sm"
+									class="w-36 gap-2 px-3"
+									color="green"
+									disabled={form?.reload}
+								>
 									<CheckOutline size="sm" /> Save
 								</Button>
 							{/if}
