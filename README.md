@@ -110,7 +110,7 @@ If you have questions or need help integrating the product please [contact us](h
 - 🌶 [Flowbite-Svelte](https://flowbite-svelte.com) - Open-source components for Svelte
 - 📚 [Flowbite Library](https://flowbite.com/) - Open-source components built with Tailwind CSS
 - 🎨 [Flowbite Figma](https://flowbite.com/figma/) - Design system built for Figma
-- 🧱 [Flowbite Svelte Blocks](https://flowbite-svelte-blocks.com/blocks/) - Building sections for website and applications
+- 🧱 [Flowbite Svelte Blocks](https://flowbite-svelte.com/blocks) - Building sections for website and applications
 - 💎 [Flowbite Pro](https://flowbite.com/pro/) - A larger collection of the open-source version of the latter three
 
 ## Authors
